@@ -1,0 +1,77 @@
+package com.company;
+
+import java.util.Arrays;
+
+public class QuickSort {
+    public static int qSort(int[] arry,int left,int right){
+        int temp = arry[left];//定义基准数，默认为数组的第一个元素
+        while (left!=right){
+            //从右边开始找
+            //循环执行的条件
+            //因为默认的基准数是在最左边，所以首先从右边开始比较进入while循环的判断条件
+            //如果当前arr[right]比基准数大，则直接将右指针左移一位，当然还要保证left<right
+            while (arry[right]>=temp&&left<right){
+                right--;
+            }
+            //跳出循环说明当前的arr[right]比基准数要小，那么直接将当前数移动到基准数所在的位置，并且左指针向右移一位（left++）
+            //这时当前数（arr[right]）所在的位置空出，需要从左边找一个比基准数大的数来填充。
+            if (left<right){
+                arry[left++]=arry[right];
+            }
+            //从左边开始找
+            //在左边找到比基准数大的数填充到right的位置。
+            //因为现在需要填充的位置在右边，所以左边的指针移动，如果arr[left]小于或者等于基准数，则直接将左指针右移一位
+            while (arry[left]<=temp&&left<right){
+                left++;
+            }
+            //跳出上一个循环说明当前的arr[left]的值大于基准数，需要将该值填充到右边空出的位置，然后当前位置空出。
+            if (left<right){
+                arry[right--] = arry[left];
+            }
+        }
+        //当循环结束说明左指针和右指针已经相遇。并且相遇的位置是一个空出的位置，
+        //这时候将基准数填入该位置，并返回该位置的下标，为分区做准备。
+        arry[left] = temp;
+        return left;
+    }
+    public static void quicksort(int[] arry,int left,int right){
+        if (left<right){
+            int temp = qSort(arry,left,right);
+            quicksort(arry,left,temp-1);
+            quicksort(arry,temp+1,right);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arry={72,6,57,88,60,42,83,73,48,85};
+        quicksort(arry,0,9);
+        System.out.println(Arrays.toString(arry));
+    }
+}
+
+    public void quickSort(int[]a,int left,int right)
+    {
+        if(left>right)
+            return;
+        int pivot=a[left];//定义基准值为数组第一个数
+        int i=left;
+        int j=right;
+
+        while(i<j)
+        {
+            while(pivot<=a[j]&&i<j)//从右往左找比基准值小的数
+                j--;
+            while(pivot>=a[i]&&i<j)//从左往右找比基准值大的数
+                i++;
+            if(i<j)                     //如果i<j，交换它们
+            {
+                int temp=a[i];
+                a[i]=a[j];
+                a[j]=temp;
+            }
+        }
+        a[left]=a[i];
+        a[i]=pivot;//把基准值放到合适的位置
+        quickSort(a,left,i-1);//对左边的子数组进行快速排序
+        quickSort(a,i+1,right);//对右边的子数组进行快速排序
+    }
