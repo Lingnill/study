@@ -1,0 +1,25 @@
+//问题：给定nums=[2，7，11，15]，target=9；因为num[0]+num[1]=2+7=9;所以返回[0,1]
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author lingnill
+ */
+public class twoSum {
+    public int[] twoSums(int[] nums,int target){
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int i=0;i<nums.length;i++){
+            if (map.get(target-nums[i])==null){
+                map.put(nums[i],i);
+            }else {
+                int[] a = new int[2];
+                a[0]=map.get(target-nums[i]);
+                a[1]=i;
+                return a;
+            }
+        }
+        return null;
+    }
+
+}
